@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monto carlo pi stimulation</title>
+  </head>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color:#FFB627;
+      color: black;
+    }
+    canvas {
+      background: #ffc971;
+      margin-top: 20px;
+    }
+  </style>
+  <body>
+
+    <canvas id="canvas" width="400" height="400"> </canvas>
+    <p id="result">π ≈ 0</p>
+    <button onclick="startStimulation()">start stimulation</button>
+
+
+    <script>
+      let canvas = document.getElementById("canvas");
+      let ctx = canvas.getContext("2d");
+      let inside = 0;
+      let total = 0;
+      function startStimulation() {
+        setInterval(simulatepoint, 10);
+      }
+      function simulatepoint() {
+        let x = Math.random();
+        let y = Math.random();
+        total++; //increase in count
+
+        let px = x * 400; //for point inside canvas
+        let py = y * 400;
+
+        //condition for inside circle of 1/4 or not
+        if (x * x + y * y <= 1) {
+          inside++;
+          ctx.fillStyle = "green";
+        } else {
+          ctx.fillStyle = "red";
+        }
+        ctx.fillRect(px, py, 3, 3);
+
+        let pi = (4 * inside) / total;    //formula
+        document.getElementById("result").innerText = "π ≈ " + pi.toFixed(4);
+      }
+    </script>
+  </body>
+</html>
